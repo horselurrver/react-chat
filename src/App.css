@@ -1,33 +1,100 @@
+html, body {
+  height: 100%;
+}
+
+.sender {
+  margin: 0;
+  color: grey;
+}
+
+.message {
+  background: #3399ff;
+  display: inline-block;
+  padding: 0.4em;
+  border-radius: 0.4em;
+  color: white;
+  margin: 0 0 2em 0;
+}
+
+i {
+  display: inline-block;
+  float: right;
+  font-size: 2em;
+  margin: 0.3em;
+}
+
+.create-a-room {
+  padding: 0.3em;
+  margin: 1em;
+  display: inline-block;
+}
+
+.type-message {
+  padding: 1em;
+}
+
+.your-rooms {
+  margin: 0;
+  padding: 1em;
+}
+
+.all-rooms {
+  color: #edebeb;
+}
+
+.all-rooms p {
+  margin-left: 2em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.room-list {
+  background: #3399ff;
+  color: white;
+  float: left;
+  position: relative;
+  width: 25%;
+  height: 80vh;
+  overflow-wrap: break-word;
+}
+
+.message-panel {
+  background: white;
+  float: left;
+  position: relative;
+  width: 75%;
+  padding: 2em;
+  overflow-y: scroll;
+  height: 35em;
+}
+
+.form {
+  background: white;
+  float: left;
+  position: relative;
+  width: 24%;
+  height: 30vh;
+}
+
+.send {
+  background: lightgrey;
+  float: left;
+  position: relative;
+  width: 76%;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.RoomList {
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.MessageList {
+
 }

@@ -4,7 +4,7 @@ class SendMessage extends Component {
   render() {
     return (
       <div className="send">
-        <textarea>
+        <textarea placeholder="Type message & hit ENTER">
         </textarea>
       </div>
     );

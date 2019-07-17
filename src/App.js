@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-import RoomList from './RoomList.js';
-import MessageList from './MessageList.js';
-import NewRoomForm from './NewRoomForm.js';
-import SendMessage from './SendMessage.js';
+import RoomList from './components/RoomList.js';
+import MessageList from './components/MessageList.js';
+import NewRoomForm from './components/NewRoomForm.js';
+import SendMessage from './components/SendMessage.js';
 import Chatkit from '@pusher/chatkit-client';
+import { tokenUrl, instanceLocator } from './config'
 
 class App extends React.Component {
   constructor(props) {
@@ -25,10 +26,10 @@ class App extends React.Component {
 
   componentDidMount() {
     const chatManager = new Chatkit.ChatManager({
-        instanceLocator: 'v1:us1:0e96fcde-6705-4b06-8703-1fb324bca30a',
+        instanceLocator,
         userId: 'amy wang',
         tokenProvider: new Chatkit.TokenProvider({
-        url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/0e96fcde-6705-4b06-8703-1fb324bca30a/token'
+        url: tokenUrl
     })
   });
 
@@ -40,12 +41,6 @@ class App extends React.Component {
   .catch(error => {
     console.error("error:", error);
   });
-  // chatManager.connect()
-  // .then(currentUser => {
-  //   this.currentUser = currentUser
-  //   this.getRooms()
-  // })
-  // .catch(err => console.log('error on connecting: ', err))
 }
 
   submit(e) {

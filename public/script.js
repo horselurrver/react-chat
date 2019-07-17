@@ -1,15 +1,11 @@
-// $( document ).ready(function() {
-//     console.log('ready!');
+// import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
 //
-//     $('#text-area').keypress(function(event){
-//     	var keycode = (event.keyCode ? event.keyCode : event.which);
-//     	if (keycode == '13'){
-//     		// clear all the writing in the text area
-//         let text = $('#text-area').val();
-//         text = text.trim();
-//         console.log(text);
-//         $('#text-area').val('');
-// 	  }
+// const tokenProvider = new Chatkit.TokenProvider({
+//   url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/0e96fcde-6705-4b06-8703-1fb324bca30a/token'
+// });
 //
-//   });
+// const chatManager = new Chatkit.ChatManager({
+//   instanceLocator: 'v1:us1:0e96fcde-6705-4b06-8703-1fb324bca30a',
+//   userId: 'amy wang',
+//   tokenProvider: tokenProvider
 // });

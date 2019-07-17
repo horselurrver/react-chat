@@ -18,6 +18,7 @@ class App extends React.Component {
           'message': 'Hey!'
         }
       ],
+      rooms: ['Announcements', 'Random']
     });
 
     this.handleChange = this.handleChange.bind(this);
@@ -70,7 +71,8 @@ class App extends React.Component {
       <div className="App">
         <div className="row">
           <RoomList
-            className="RoomList"/>
+            className="RoomList"
+            rooms={this.state.rooms}/>
           <MessageList
             className="MessageList"
             messages={this.state.messages}/>

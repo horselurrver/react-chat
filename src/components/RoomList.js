@@ -7,8 +7,11 @@ class RoomList extends Component {
         <div>
           <h3 className="your-rooms">Your rooms:</h3>
           <div className="all-rooms">
-            <p># Soccer</p>
-            <p># NBA</p>
+            {this.props.rooms.map((room, index) => {
+              return (
+                <p key={index}>&nbsp;&nbsp;&nbsp;#{room}</p>
+              )
+            })}
           </div>
         </div>
       </div>

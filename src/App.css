@@ -38,10 +38,6 @@ i {
   color: #edebeb;
 }
 
-.all-rooms p {
-  margin-left: 2em;
-}
-
 .row {
   display: flex;
   flex-direction: row;

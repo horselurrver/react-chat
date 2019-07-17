@@ -18,7 +18,6 @@ class SendMessage extends Component {
         value={this.props.textVal}
         onChange={this.props.handleChange}
         ></textarea>
-        <button>Submit</button>
       </div>
     );
   }

@@ -23,6 +23,7 @@ class App extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
+    this.makeroom = this.makeroom.bind(this);
   }
 
   componentDidMount() {
@@ -37,17 +38,29 @@ class App extends React.Component {
   chatManager
   .connect()
   .then(currentUser => {
+    this.currentUser = currentUser
     console.log("Connected as user ", currentUser);
   })
   .catch(error => {
-    console.error("error:", error);
-  });
-}
+      console.error("error:", error);
+    });
+  }
+
+  makeroom() {
+    let roomsCopy = this.state.rooms.slice();
+    roomsCopy.push('Bob');
+    this.setState({
+      rooms: roomsCopy
+    });
+  }
 
   submit(e) {
     if (e.which === 13 || e.keyCode === 13) {
         //code to execute here
         let input = e.target.value.trim();
+        if (input.length === 0) {
+          return;
+        }
         let messageCopy = this.state.messages.slice();
         messageCopy.push({
           'name': 'anonymous',
@@ -57,6 +70,10 @@ class App extends React.Component {
           textVal: '',
           messages: messageCopy
         });
+        this.currentUser.sendMessage({
+            text: input,
+            roomId: this.currentUser.rooms[0].id
+        })
     }
   }
 
@@ -79,7 +96,8 @@ class App extends React.Component {
         </div>
         <div className="row">
           <NewRoomForm
-            className="NewRoomForm"/>
+            className="NewRoomForm"
+            makeroom={this.makeroom}/>
           <SendMessage
             className="SendMessage"
             handleChange={this.handleChange}

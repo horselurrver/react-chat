@@ -5,7 +5,7 @@ class NewRoomForm extends Component {
     return (
       <div className="form">
         <p className="create-a-room">Create a room</p>
-        <i class="fas fa-plus"></i>
+        <i className="fas fa-plus" onClick={() => alert('MAKE A ROOM')}></i>
       </div>
     );
   }

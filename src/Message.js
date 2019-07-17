@@ -4,8 +4,8 @@ class Message extends Component {
   render() {
     return (
       <div>
-        <p className="sender">bob</p>
-        <p className="message">MESSAGE bob</p>
+        <p className="sender">{this.props.name}</p>
+        <p className="message">{this.props.message}</p>
       </div>
     );
   }

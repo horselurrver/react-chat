@@ -5,15 +5,11 @@ class MessageList extends Component {
   render() {
     return (
       <div className="message-panel">
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
-        <Message />
+        {this.props.messages.map((message, index) => {
+          return (
+            <Message key={index} name={message.name} message={message.message}/>
+          );
+        })}
       </div>
     );
   }

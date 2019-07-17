@@ -48,6 +48,7 @@ class App extends React.Component {
 
   makeroom() {
     let roomsCopy = this.state.rooms.slice();
+    console.log('making room');
     roomsCopy.push('Bob');
     this.setState({
       rooms: roomsCopy

@@ -18,12 +18,14 @@ class App extends React.Component {
           'message': 'Hey!'
         }
       ],
-      rooms: ['Announcements', 'Random']
+      rooms: ['Announcements', 'Random'],
+      roomVal: '',
     });
 
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
     this.makeroom = this.makeroom.bind(this);
+    this.updateRoomVal = this.updateRoomVal.bind(this);
   }
 
   componentDidMount() {
@@ -47,12 +49,26 @@ class App extends React.Component {
   }
 
   makeroom() {
-    let roomsCopy = this.state.rooms.slice();
-    console.log('making room');
-    roomsCopy.push('Bob');
+    //let roomsCopy = this.state.rooms.slice();
+    console.log('making room called ' + this.state.roomVal);
+    // roomsCopy.push('Bob');
+    // this.setState({
+    //   rooms: roomsCopy
+    // });
+    if (this.state.roomVal.length === 0) {
+      alert('Room name is empty');
+      return;
+    }
     this.setState({
-      rooms: roomsCopy
+      roomVal: ''
     });
+
+
+    // this.currentUser.createRoom({
+    //   name
+    // })
+    // .then(room => this.subscribeToRoom(room.id))
+    // .catch(err => console.log('error with createRoom: ', err))
   }
 
   submit(e) {
@@ -60,6 +76,7 @@ class App extends React.Component {
         //code to execute here
         let input = e.target.value.trim();
         if (input.length === 0) {
+          alert('Message box is empty');
           return;
         }
         let messageCopy = this.state.messages.slice();
@@ -84,6 +101,12 @@ class App extends React.Component {
     });
   }
 
+  updateRoomVal(e) {
+    this.setState({
+      roomVal: e.target.value,
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -98,7 +121,10 @@ class App extends React.Component {
         <div className="row">
           <NewRoomForm
             className="NewRoomForm"
-            makeroom={this.makeroom}/>
+            makeroom={this.makeroom}
+            roomVal={this.state.roomVal}
+            updateRoomVal={this.updateRoomVal}
+            />
           <SendMessage
             className="SendMessage"
             handleChange={this.handleChange}

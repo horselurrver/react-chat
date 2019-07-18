@@ -11,13 +11,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
+      roomId: '21667002',
       textVal: '',
-      messages: [
-        {
-          'name': 'anonymous',
-          'message': 'Hey!'
-        }
-      ],
+      messages: [],
       rooms: ['Announcements', 'Random'],
       roomVal: '',
     });
@@ -42,6 +38,24 @@ class App extends React.Component {
   .then(currentUser => {
     this.currentUser = currentUser
     console.log("Connected as user ", currentUser);
+    let messageList = [];
+    currentUser.subscribeToRoomMultipart({
+      roomId: currentUser.rooms[0].id,
+      hooks: {
+        onMessage: message => {
+          // alert(message.parts[0].payload.content);
+          console.log(JSON.stringify(message.senderId));
+          console.log('\n\n')
+          messageList.push({
+            'name': message.senderId,
+            'message': message.parts[0].payload.content
+          });
+          this.setState({
+            messages: messageList
+          })
+        }
+      }
+    });
   })
   .catch(error => {
       console.error("error:", error);
@@ -55,7 +69,8 @@ class App extends React.Component {
     // this.setState({
     //   rooms: roomsCopy
     // });
-    if (this.state.roomVal.length === 0) {
+    let roomName = this.state.roomVal;
+    if (roomName.length === 0) {
       alert('Room name is empty');
       return;
     }
@@ -64,11 +79,11 @@ class App extends React.Component {
     });
 
 
-    // this.currentUser.createRoom({
-    //   name
-    // })
-    // .then(room => this.subscribeToRoom(room.id))
-    // .catch(err => console.log('error with createRoom: ', err))
+    this.currentUser.createRoom({
+      name: roomName,
+    })
+    .then(room => this.subscribeToRoom(room.id))
+    .catch(err => console.log('error with createRoom: ', err))
   }
 
   submit(e) {
@@ -90,7 +105,7 @@ class App extends React.Component {
         });
         this.currentUser.sendMessage({
             text: input,
-            roomId: this.currentUser.rooms[0].id
+            roomId: this.state.roomId,
         })
     }
   }

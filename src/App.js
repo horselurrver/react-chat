@@ -14,14 +14,17 @@ class App extends React.Component {
       roomId: '21667002',
       textVal: '',
       messages: [],
-      rooms: ['Announcements', 'Random'],
       roomVal: '',
+      joinableRooms: [],
+      joinedRooms: [],
+      allRooms: []
     });
 
-    this.handleChange = this.handleChange.bind(this);
+    this.updateTextVal = this.updateTextVal.bind(this);
     this.submit = this.submit.bind(this);
     this.makeroom = this.makeroom.bind(this);
     this.updateRoomVal = this.updateRoomVal.bind(this);
+    this.getRooms = this.getRooms.bind(this);
   }
 
   componentDidMount() {
@@ -36,7 +39,9 @@ class App extends React.Component {
   chatManager
   .connect()
   .then(currentUser => {
-    this.currentUser = currentUser
+    this.currentUser = currentUser;
+    this.getRooms();
+    console.log(this.currentUser);
     console.log("Connected as user ", currentUser);
     let messageList = [];
     currentUser.subscribeToRoomMultipart({
@@ -74,16 +79,29 @@ class App extends React.Component {
       alert('Room name is empty');
       return;
     }
+
     this.setState({
       roomVal: ''
     });
 
-
     this.currentUser.createRoom({
       name: roomName,
     })
-    .then(room => this.subscribeToRoom(room.id))
+    .then(room => console.log('successfully made room!'))
     .catch(err => console.log('error with createRoom: ', err))
+  }
+
+  getRooms() {
+      this.currentUser.getJoinableRooms()
+      .then(joinableRooms => {
+          console.log(this.currentUser.rooms);
+          this.setState({
+              joinableRooms,
+              joinedRooms: this.currentUser.rooms,
+              allRooms: joinableRooms.concat(this.currentUser.rooms)
+          });
+      })
+      .catch(err => console.log('error on joinableRooms: ', err))
   }
 
   submit(e) {
@@ -110,7 +128,7 @@ class App extends React.Component {
     }
   }
 
-  handleChange(e) {
+  updateTextVal(e) {
     this.setState({
       textVal: e.target.value,
     });
@@ -128,7 +146,7 @@ class App extends React.Component {
         <div className="row">
           <RoomList
             className="RoomList"
-            rooms={this.state.rooms}/>
+            rooms={this.state.allRooms}/>
           <MessageList
             className="MessageList"
             messages={this.state.messages}/>
@@ -142,7 +160,7 @@ class App extends React.Component {
             />
           <SendMessage
             className="SendMessage"
-            handleChange={this.handleChange}
+            handleChange={this.updateTextVal}
             textVal={this.state.textVal}
             submit={this.submit}/>
         </div>

@@ -9,7 +9,7 @@ class RoomList extends Component {
           <div className="all-rooms">
             {this.props.rooms.map((room, index) => {
               return (
-                <p className="room-name" key={index}>&nbsp;&nbsp;&nbsp;#{room}</p>
+                <p className="room-name" key={index}>&nbsp;&nbsp;&nbsp;#{room.name}</p>
               )
             })}
           </div>

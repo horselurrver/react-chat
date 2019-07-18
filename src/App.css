@@ -7,9 +7,12 @@ input {
   font-size: 1em;
 }
 
-
 input:focus {
   outline: none;
+}
+
+.roomLine {
+  display: inline-block;
 }
 
 .sender {

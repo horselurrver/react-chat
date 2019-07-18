@@ -14,7 +14,7 @@ class SendMessage extends Component {
         <textarea
         id="text-area"
         onKeyPress={this.props.submit}
-        placeholder="Type message & hit ENTER"
+        placeholder="Type message & hit enter"
         value={this.props.textVal}
         onChange={this.props.handleChange}
         ></textarea>

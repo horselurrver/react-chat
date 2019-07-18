@@ -5,5 +5,11 @@ function scroll() {
 }
 
 $(document).ready(() => {
-  window.setInterval(scroll, 5000);
+  // window.setInterval(scroll, 5000);
+  document.onkeypress = function (e) {
+    e = e || window.event;
+    if (e.keyCode === 13) {
+      scroll();
+    }
+  };
 });

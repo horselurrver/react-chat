@@ -80,14 +80,16 @@ class App extends React.Component {
       return;
     }
 
-    this.setState({
-      roomVal: ''
-    });
-
     this.currentUser.createRoom({
       name: roomName,
     })
-    .then(room => console.log('successfully made room!'))
+    .then(room => {
+      this.setState({
+        roomVal: '',
+        joinedRooms: this.state.joinedRooms.concat(room),
+        allRooms: this.state.allRooms.concat(room),
+      });
+    })
     .catch(err => console.log('error with createRoom: ', err))
   }
 

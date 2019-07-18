@@ -22,9 +22,10 @@ class App extends React.Component {
 
     this.updateTextVal = this.updateTextVal.bind(this);
     this.submit = this.submit.bind(this);
-    this.makeroom = this.makeroom.bind(this);
+    this.makeRoom = this.makeRoom.bind(this);
     this.updateRoomVal = this.updateRoomVal.bind(this);
     this.getRooms = this.getRooms.bind(this);
+    this.deleteRoom = this.deleteRoom.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +33,7 @@ class App extends React.Component {
         instanceLocator,
         userId: 'amy wang',
         tokenProvider: new Chatkit.TokenProvider({
-        url: tokenUrl
+        url: tokenUrl,
     })
   });
 
@@ -41,7 +42,6 @@ class App extends React.Component {
   .then(currentUser => {
     this.currentUser = currentUser;
     this.getRooms();
-    console.log(this.currentUser);
     console.log("Connected as user ", currentUser);
     let messageList = [];
     currentUser.subscribeToRoomMultipart({
@@ -49,8 +49,6 @@ class App extends React.Component {
       hooks: {
         onMessage: message => {
           // alert(message.parts[0].payload.content);
-          console.log(JSON.stringify(message.senderId));
-          console.log('\n\n')
           messageList.push({
             'name': message.senderId,
             'message': message.parts[0].payload.content
@@ -67,7 +65,25 @@ class App extends React.Component {
     });
   }
 
-  makeroom() {
+  deleteRoom(roomId) {
+    this.currentUser.deleteRoom({
+      roomId: roomId
+    })
+    .then(() => {
+      console.log(`deleted room with ID: ${roomId}`)
+      console.log(this.state.allRooms);
+      this.setState({
+        joinableRooms: this.state.joinableRooms.filter((room) => room.id !== roomId),
+        joinedRooms: this.state.joinedRooms.filter((room) => room.id !== roomId),
+        allRooms: this.state.allRooms.filter((room) => room.id !== roomId)
+      });
+    })
+    .catch(err => {
+      console.log(`error deleted room ${roomId}: ${err}`)
+    })
+  }
+
+  makeRoom() {
     //let roomsCopy = this.state.rooms.slice();
     console.log('making room called ' + this.state.roomVal);
     // roomsCopy.push('Bob');
@@ -148,7 +164,8 @@ class App extends React.Component {
         <div className="row">
           <RoomList
             className="RoomList"
-            rooms={this.state.allRooms}/>
+            rooms={this.state.allRooms}
+            deleteRoom={this.deleteRoom}/>
           <MessageList
             className="MessageList"
             messages={this.state.messages}/>
@@ -156,7 +173,7 @@ class App extends React.Component {
         <div className="row">
           <NewRoomForm
             className="NewRoomForm"
-            makeroom={this.makeroom}
+            makeRoom={this.makeRoom}
             roomVal={this.state.roomVal}
             updateRoomVal={this.updateRoomVal}
             />

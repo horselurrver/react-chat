@@ -4,7 +4,7 @@ import Message from './Message.js';
 class MessageList extends Component {
   render() {
     return (
-      <div className="message-panel">
+      <div id="message-panel" className="message-panel">
         {this.props.messages.map((message, index) => {
           return (
             <Message key={index} name={message.name} message={message.message}/>

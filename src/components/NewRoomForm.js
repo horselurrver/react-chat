@@ -5,7 +5,7 @@ class NewRoomForm extends Component {
     return (
       <div className="form">
         <input onChange={this.props.updateRoomVal} value={this.props.roomVal} placeholder="Create a room" className="create-a-room"></input>
-        <i className="fas fa-plus" onClick={this.props.makeroom}></i>
+        <i className="fas fa-plus" onClick={this.props.makeRoom}></i>
       </div>
     );
   }

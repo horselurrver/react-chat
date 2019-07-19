@@ -83,6 +83,7 @@ class App extends React.Component {
                   'message': message.text
                 });
                 this.setState({
+                    roomId: newRoomId,
                     messages: messageList
                 })
             }
@@ -198,7 +199,8 @@ class App extends React.Component {
             className="RoomList"
             rooms={this.state.allRooms}
             deleteRoom={this.deleteRoom}
-            switchRoom={this.switchRoom}/>
+            switchRoom={this.switchRoom}
+            selectedRoom={this.state.roomId}/>
           <MessageList
             className="MessageList"
             messages={this.state.messages}/>
@@ -214,7 +216,8 @@ class App extends React.Component {
             className="SendMessage"
             handleChange={this.updateTextVal}
             textVal={this.state.textVal}
-            submit={this.submit}/>
+            submit={this.submit}
+            />
         </div>
       </div>
     );

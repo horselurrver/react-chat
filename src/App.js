@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      roomId: '21667002',
+      roomId: '',
       textVal: '',
       messages: [],
       roomVal: '',
@@ -26,6 +26,7 @@ class App extends React.Component {
     this.updateRoomVal = this.updateRoomVal.bind(this);
     this.getRooms = this.getRooms.bind(this);
     this.deleteRoom = this.deleteRoom.bind(this);
+    this.switchRoom = this.switchRoom.bind(this);
   }
 
   componentDidMount() {
@@ -54,7 +55,8 @@ class App extends React.Component {
             'message': message.parts[0].payload.content
           });
           this.setState({
-            messages: messageList
+            messages: messageList,
+            roomId: currentUser.rooms[0].id
           })
         }
       }
@@ -63,6 +65,36 @@ class App extends React.Component {
   .catch(error => {
       console.error("error:", error);
     });
+  }
+
+  switchRoom(newRoomId) {
+    console.log('SWITCH ROOM to ' + newRoomId);
+    this.setState({
+      messages: []
+    });
+    let messageList = [];
+    this.currentUser.subscribeToRoom({
+        roomId: newRoomId,
+        hooks: {
+            onMessage: message => {
+                //alert('MESSAGE: ' + JSON.stringify(message));
+                messageList.push({
+                  'name': message.senderId,
+                  'message': message.text
+                });
+                this.setState({
+                    messages: messageList
+                })
+            }
+        }
+    })
+    .then(room => {
+        this.setState({
+            roomId: room.id
+        })
+        this.getRooms()
+    })
+    .catch(err => console.log('error on subscribing to room: ', err))
   }
 
   deleteRoom(roomId) {
@@ -165,7 +197,8 @@ class App extends React.Component {
           <RoomList
             className="RoomList"
             rooms={this.state.allRooms}
-            deleteRoom={this.deleteRoom}/>
+            deleteRoom={this.deleteRoom}
+            switchRoom={this.switchRoom}/>
           <MessageList
             className="MessageList"
             messages={this.state.messages}/>

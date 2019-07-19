@@ -10,7 +10,7 @@ class RoomList extends Component {
             {this.props.rooms.map((room, index) => {
               return (
                 <div key={index}>
-                  <p className="room-name roomLine">&nbsp;&nbsp;&nbsp;#{room.name}</p>
+                  <p onClick={() => this.props.switchRoom(room.id)} className="room-name roomLine">&nbsp;&nbsp;&nbsp;#{room.name}</p>
                   <i onClick={() => this.props.deleteRoom(room.id)} className="fas fa-trash fa-sm roomLine"></i>
                 </div>
               )

@@ -33,7 +33,7 @@ i {
   display: inline-block;
   float: right;
   font-size: 2em;
-  margin: 0.3em;
+  margin: 0.9em;
 }
 
 .create-a-room {
@@ -50,6 +50,11 @@ i {
 .room-name:hover {
   color: white;
   cursor: pointer;
+}
+
+.active {
+  color: white;
+  font-weight: bold;
 }
 
 .all-rooms {
